@@ -1,14 +1,15 @@
 body {
+  background: green;
   height : 1vh;
   width : 1vw;
   display : grid;
   grid-template-rows: 1fr 1fr;
 }
-inputDiv {
+#inputDiv {
   grid-row : 1;
   background: magenta;
 }
-outputDiv {
+#outputDiv {
   grid-row : 2;
   background : blue;
 }
