@@ -1,15 +1,23 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
 body {
-  background: green;
-  height : 1vh;
-  width : 1vw;
+  background: #efefef;
+  height : 100vh;
+  width : 100vw;
+  padding: 2em;
   display : grid;
   grid-template-rows: 1fr 1fr;
 }
-#inputDiv {
-  grid-row : 1;
-  background: magenta;
+#videoInput {
+
+    height: 100%;
+    width: 100%;
+    object-fit: fit;
 }
-#outputDiv {
-  grid-row : 2;
-  background : blue;
+#canvasOutput {
+
+    height: 100%;
+    margin: auto;
 }
