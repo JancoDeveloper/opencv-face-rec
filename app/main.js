@@ -1,3 +1,6 @@
+
+cv.FS_createPreloadedFile('/', 'lbpcascade_frontalface_improved.xml', 'http://127.0.0.1:3000/app/data/lbpcascade_frontalface_improved.xml', true, true);
+
 function main() {
   startCamera();
   detectFaces();
@@ -17,21 +20,20 @@ function startCamera() {
 
 function detectFaces() {
   let video = document.getElementById('videoInput');
-  var cascadeFile = 'haarcascade_frontalface_default.xml';
   let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
   let dst = new cv.Mat(video.height, video.width, cv.CV_8UC4);
   let gray = new cv.Mat();
   let cap = new cv.VideoCapture(video);
   let faces = new cv.RectVector();
   let classifier = new cv.CascadeClassifier();
-  classifier.load('haarcascade_frontalface_default.xml')
+  classifier.load('lbpcascade_frontalface_improved.xml')
   const FPS = 30;
   function processVideo() {
     try {
       let begin = Date.now();
       cap.read(src);
       src.copyTo(dst);
-      cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
+      cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY, 0);
       classifier.detectMultiScale(gray, faces, 1.1, 3, 0);
       for (let i = 0; i < faces.size(); ++i) {
         let face = faces.get(i);
