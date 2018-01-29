@@ -1,17 +1,13 @@
 
 cv.FS_createPreloadedFile('/', 'lbpcascade_frontalface_improved.xml', 'http://127.0.0.1:3000/app/data/lbpcascade_frontalface_improved.xml', true, true);
 
-function main() {
-  startCamera();
-  detectFaces();
-}
-
 function startCamera() {
-  let video = document.getElementById('videoInput');
-  navigator.mediaDevices.getUserMedia({video: true, audio: false})
+  var video = document.getElementById('videoInput');
+  navigator.mediaDevices.getUserMedia({video:{height:480,width:640}, audio: false})
   .then(function(stream) {
     video.srcObject = stream;
-    video.play();
+//    startWorker();
+    detectFaces();
   })
   .catch(function(err) {
     console.log('Camera Error: ' + err.name + ' ' + err.message);
@@ -49,4 +45,25 @@ function detectFaces() {
     }
   }
   setTimeout(processVideo, 0);
+}
+
+function startWorker() {
+  var worker = new Worker('worker.js');
+  worker.postMessage('go ahead');
+  console.log('signalled worker to start');
+}
+
+function startCamera2() {
+// Prefer camera resolution nearest to 1280x720.
+var constraints = { audio: false, video: { width: 640, height: 480, frameRate: 30 } };
+
+navigator.mediaDevices.getUserMedia(constraints)
+.then(function(mediaStream) {
+  var video = document.querySelector('video');
+  video.srcObject = mediaStream;
+  video.onloadedmetadata = function(e) {
+    video.play();
+  };
+})
+.catch(function(err) { console.log(err.name + ": " + err.message); }); // always check for errors at the end.
 }
