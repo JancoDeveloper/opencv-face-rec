@@ -6,7 +6,7 @@ function startCamera() {
   navigator.mediaDevices.getUserMedia({video:{height:480,width:640}, audio: false})
   .then(function(stream) {
     video.srcObject = stream;
-//    startWorker();
+    video.play();
     detectFaces();
   })
   .catch(function(err) {
